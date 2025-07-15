@@ -1,6 +1,8 @@
 using Job_Layer_Management.Repositories;
 using Job_Layer_Management.Services;
 using Job_Layer_Management.Services.Interfaces;
+using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<JobRepository>();
+
+
+builder.Services.AddSwaggerGen(c =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
 
 var app = builder.Build();
 

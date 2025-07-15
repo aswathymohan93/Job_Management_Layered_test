@@ -10,6 +10,7 @@
         "tags": [
           "JOB"
         ],
+        "summary": "Retrieves all job records from the system.",
         "responses": {
           "200": {
             "description": "OK"
@@ -22,10 +23,12 @@
         "tags": [
           "JOB"
         ],
+        "summary": "Retrieves a specific job record based on the provided job ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The unique identifier of the job to retrieve. This is a required route parameter; if not provided, a validation error will occur.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -45,10 +48,12 @@
         "tags": [
           "JOB"
         ],
+        "summary": "Deletes a job record based on the provided job ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the job to delete. This is required; if not provided, a validation error will occur.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -68,10 +73,12 @@
         "tags": [
           "JOB"
         ],
+        "summary": "Updates an existing job record based on the provided job ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "The ID of the job to update. This is required; if not provided, a validation error will occur.",
             "required": true,
             "schema": {
               "type": "integer",
@@ -110,6 +117,7 @@
         "tags": [
           "JOB"
         ],
+        "summary": "Adds a new job record to the system.",
         "requestBody": {
           "content": {
             "application/json": {

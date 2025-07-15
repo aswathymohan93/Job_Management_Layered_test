@@ -18,6 +18,12 @@ namespace Job_Layer_Management.Controllers
             _jobService = jobService;
         }
 
+        /// <summary>
+        /// Retrieves all job records from the system.
+        /// </summary>
+        /// <returns>
+        /// A response containing the total count of job records and the job data.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> GetJobs()
         {
@@ -40,6 +46,13 @@ namespace Job_Layer_Management.Controllers
             }
         }
 
+        /// <summary>
+        /// Retrieves a specific job record based on the provided job ID.
+        /// </summary>
+        /// <param name="id">
+        /// The unique identifier of the job to retrieve. This is a required route parameter; if not provided, a validation error will occur.
+        /// </param>
+        /// <returns>The job record corresponding to the specified job ID.</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetJobById(int id)
         {
@@ -54,6 +67,15 @@ namespace Job_Layer_Management.Controllers
             }
         }
 
+        /// <summary>
+        /// Deletes a job record based on the provided job ID.
+        /// </summary>
+        /// <param name="id">
+        /// The ID of the job to delete. This is required; if not provided, a validation error will occur.
+        /// </param>
+        /// <returns>
+        /// A response indicating whether the job was successfully deleted, not found, or if an error occurred.
+        /// </returns>
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteJob(int id)
         {
@@ -74,8 +96,16 @@ namespace Job_Layer_Management.Controllers
             };
         }
 
-      
 
+        /// <summary>
+        /// Updates an existing job record based on the provided job ID.
+        /// </summary>
+        /// <param name="id">
+        /// The ID of the job to update. This is required; if not provided, a validation error will occur.
+        /// </param>
+        /// <returns>
+        /// A response indicating whether the job was successfully updated, not found, already in use, or if an error occurred.
+        /// </returns>
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateJob(int id, [FromBody] JobUpdateDto jobDto)
         {
@@ -111,6 +141,12 @@ namespace Job_Layer_Management.Controllers
                 _ => StatusCode(500, "Unknown error.")
             };
         }
+
+        /// <summary>
+        /// Adds a new job record to the system.
+        /// </summary>
+        /// <returns>Returns the outcome of the add operation, including the newly created job ID if successful.
+        /// </returns>
 
         [HttpPost("Add")]
         public async Task<IActionResult>AddJob( [FromBody] JobUpdateDto jobDto)

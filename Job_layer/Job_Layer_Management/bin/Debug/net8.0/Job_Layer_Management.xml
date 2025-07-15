@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Job_Layer_Management</name>
+    </assembly>
+    <members>
+        <member name="M:Job_Layer_Management.Controllers.JOBController.GetJobs">
+            <summary>
+            Retrieves all job records from the system.
+            </summary>
+            <returns>
+            A response containing the total count of job records and the job data.
+            </returns>
+        </member>
+        <member name="M:Job_Layer_Management.Controllers.JOBController.GetJobById(System.Int32)">
+            <summary>
+            Retrieves a specific job record based on the provided job ID.
+            </summary>
+            <param name="id">
+            The unique identifier of the job to retrieve. This is a required route parameter; if not provided, a validation error will occur.
+            </param>
+            <returns>The job record corresponding to the specified job ID.</returns>
+        </member>
+        <member name="M:Job_Layer_Management.Controllers.JOBController.DeleteJob(System.Int32)">
+            <summary>
+            Deletes a job record based on the provided job ID.
+            </summary>
+            <param name="id">
+            The ID of the job to delete. This is required; if not provided, a validation error will occur.
+            </param>
+            <returns>
+            A response indicating whether the job was successfully deleted, not found, or if an error occurred.
+            </returns>
+        </member>
+        <member name="M:Job_Layer_Management.Controllers.JOBController.UpdateJob(System.Int32,Job_Layer_Management.Models.JobUpdateDto)">
+            <summary>
+            Updates an existing job record based on the provided job ID.
+            </summary>
+            <param name="id">
+            The ID of the job to update. This is required; if not provided, a validation error will occur.
+            </param>
+            <returns>
+            A response indicating whether the job was successfully updated, not found, already in use, or if an error occurred.
+            </returns>
+        </member>
+        <member name="M:Job_Layer_Management.Controllers.JOBController.AddJob(Job_Layer_Management.Models.JobUpdateDto)">
+            <summary>
+            Adds a new job record to the system.
+            </summary>
+            <returns>Returns the outcome of the add operation, including the newly created job ID if successful.
+            </returns>
+        </member>
+    </members>
+</doc>
