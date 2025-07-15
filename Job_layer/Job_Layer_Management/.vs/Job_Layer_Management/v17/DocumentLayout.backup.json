@@ -52,7 +52,7 @@
               "RelativeDocumentMoniker": "Controllers\\JOBController.cs",
               "ToolTip": "D:\\aswathy\\Job_Management_Layered_test\\Job_layer\\Job_Layer_Management\\Controllers\\JOBController.cs",
               "RelativeToolTip": "Controllers\\JOBController.cs",
-              "ViewState": "AgIAAHAAAAAAAAAAAAAcwJQAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowDIAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-10T05:07:06.374Z",
               "EditorCaption": ""
@@ -67,8 +67,7 @@
               "RelativeToolTip": "Services\\JobService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwBQAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T04:58:44.288Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-10T04:58:44.288Z"
             },
             {
               "$type": "Document",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T05:19:22.713Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-10T05:19:22.713Z"
             },
             {
               "$type": "Document",
@@ -93,8 +91,7 @@
               "RelativeToolTip": "Job_Layer_Management.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-10T04:59:38.429Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-10T04:59:38.429Z"
             },
             {
               "$type": "Document",
@@ -106,8 +103,7 @@
               "RelativeToolTip": "Services\\Interfaces\\IJobService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T05:03:53.322Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-10T05:03:53.322Z"
             },
             {
               "$type": "Document",
@@ -131,8 +127,7 @@
               "RelativeToolTip": "Repositories\\JobRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAGEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-10T04:10:37.777Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-10T04:10:37.777Z"
             },
             {
               "$type": "Document",
