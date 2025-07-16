@@ -1,4 +1,5 @@
-﻿using Job_Layer_Management.Models;
+﻿using Job_Layer_Management.Controllers;
+using Job_Layer_Management.Models;
 using Microsoft.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -10,10 +11,12 @@ namespace Job_Layer_Management.Repositories
     public class JobRepository
     {
         private readonly IConfiguration Configuration;
+        private readonly ILogger<JOBController> Logger;
 
-        public JobRepository(IConfiguration configuration)
+        public JobRepository(IConfiguration configuration, ILogger<JOBController> logger)
         {
             Configuration = configuration;
+            Logger = logger;
         }
 
         private SqlConnection GetConnection()
@@ -61,6 +64,7 @@ namespace Job_Layer_Management.Repositories
             catch (SqlException sqlEx)
 
             {
+                Logger.LogError("SQL Error: " + sqlEx.Message + sqlEx.StackTrace);
 
 
                 await con.CloseAsync();

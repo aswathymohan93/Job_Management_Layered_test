@@ -10,12 +10,15 @@ namespace Job_Layer_Management.Controllers
     [ApiController]
     public class JOBController : ControllerBase
     {
+        private readonly ILogger<JOBController> Logger;
 
         private readonly IJobService JobService;
 
-        public JOBController(IJobService jobService)
+        public JOBController(IJobService jobService, ILogger<JOBController> logger)
         {
             JobService = jobService;
+            Logger = logger;
+
         }
 
         /// <summary>
@@ -27,6 +30,8 @@ namespace Job_Layer_Management.Controllers
         [HttpGet]
         public async Task<IActionResult> GetJobs() 
         {
+            Logger.LogInformation("Started executing GetJobs");
+
             try
             {
                 // To get all job records
@@ -44,7 +49,7 @@ namespace Job_Layer_Management.Controllers
             catch (Exception ex)
             {
 
-                
+                Logger.LogError("Exception" + ex.Message);
                 throw (new Exception("Exception" + ex.Message));
 
                 
