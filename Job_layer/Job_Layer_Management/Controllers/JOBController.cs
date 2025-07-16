@@ -32,7 +32,7 @@ namespace Job_Layer_Management.Controllers
                 // To get all job records
                 var jobs = await JobService.JobsGetAll();
 
-                // return Ok(jobs.Count()+" number of records found");
+                
 
                 return Ok(new
                 {
@@ -43,7 +43,11 @@ namespace Job_Layer_Management.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Unexpected error: {ex.Message}");
+
+                
+                throw (new Exception("Exception" + ex.Message));
+
+                
             }
         }
 
@@ -65,7 +69,8 @@ namespace Job_Layer_Management.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Unexpected error: {ex.Message}");
+                throw (new Exception("Exception" + ex.Message));
+                
             }
         }
 
@@ -81,12 +86,7 @@ namespace Job_Layer_Management.Controllers
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteJob(int id)
         {
-            //var result = await _jobService.JobDelete(id);
-
-            //int errorCode = result.ErrorCode;
-            //string message = result.Message;
-            //int jobId = result.jobId;
-
+            
 
             // Delete the job record by ID 
             var (errorCode, message, jobId) = await JobService.JobDelete(id);
@@ -145,6 +145,7 @@ namespace Job_Layer_Management.Controllers
                 _ => StatusCode(500, "Unknown error.")
             };
         }
+
 
         /// <summary>
         /// Adds a new job record to the system.

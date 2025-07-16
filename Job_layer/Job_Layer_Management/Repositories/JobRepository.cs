@@ -21,7 +21,8 @@ namespace Job_Layer_Management.Repositories
             return new SqlConnection(Configuration.GetConnectionString("JOBAppCon"));
         }
 
-      public  async Task<IEnumerable<JOB> > JobsGetAll()
+        // To get all job records
+        public async Task<IEnumerable<JOB> > JobsGetAll()
         {
             var jobs = new List<JOB>();
 
@@ -36,7 +37,7 @@ namespace Job_Layer_Management.Repositories
 
             using var reader = await cmd.ExecuteReaderAsync();
 
-            while (await reader.ReadAsync()) // ✅ Async reading
+            while (await reader.ReadAsync())
             {
                 jobs.Add(new JOB
                 {
@@ -46,14 +47,15 @@ namespace Job_Layer_Management.Repositories
                     JobType = reader["JobType"]?.ToString(),
                     StartDate = reader["StartDate"] as DateTime?,
                     EndDate = reader["EndDate"] == DBNull.Value ? null : (DateTime?)reader["EndDate"],
-                  //  CreatedOn = (DateTime)reader["CreatedOn"],
-                   // UpdatedOn = reader["UpdatedOn"] == DBNull.Value ? null : (DateTime?)reader["UpdatedOn"]
+                  
                 });
             }
 
             return jobs;
         }
 
+
+        // Retrieve job record by ID
         public async Task<IEnumerable<JOB>> GetJobById(int jobId)
         {
             var jobs = new List<JOB>();
@@ -72,7 +74,7 @@ namespace Job_Layer_Management.Repositories
 
             using var reader = await cmd.ExecuteReaderAsync();
 
-            while (await reader.ReadAsync()) // ✅ Async reading
+            while (await reader.ReadAsync()) 
             {
                 jobs.Add(new JOB
                 {
@@ -82,14 +84,14 @@ namespace Job_Layer_Management.Repositories
                     JobType = reader["JobType"]?.ToString(),
                     StartDate = reader["StartDate"] as DateTime?,
                     EndDate = reader["EndDate"] == DBNull.Value ? null : (DateTime?)reader["EndDate"],
-                  //  CreatedOn = (DateTime)reader["CreatedOn"],
-                    //UpdatedOn = reader["UpdatedOn"] == DBNull.Value ? null : (DateTime?)reader["UpdatedOn"]
+                  
                 });
             }
 
             return jobs;
         }
 
+        // Delete the job record by ID 
         public async Task<(int, string, int? JobID)> JobDelete(int jobId)
         {
             using var con = GetConnection();
@@ -114,6 +116,8 @@ namespace Job_Layer_Management.Repositories
             return (0, "No response from stored procedure",null);
         }
 
+
+        // Update the job record with the given ID
         public async Task<(int ErrorCode, string Message)> UpdateJob(int jobId, JobUpdateDto jobDto)
         {
             using var con = GetConnection();
@@ -144,6 +148,7 @@ namespace Job_Layer_Management.Repositories
             return (0, "No result returned from stored procedure.");
         }
 
+        // Add a new job record using the provided information
         public async Task<(int ErrorCode, string Message, int? JobID)> AddJob( JobUpdateDto jobDto)
         {
             using var con = GetConnection();
