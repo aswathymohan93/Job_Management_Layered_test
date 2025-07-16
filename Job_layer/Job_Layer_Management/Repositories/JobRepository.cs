@@ -9,25 +9,19 @@ namespace Job_Layer_Management.Repositories
 {
     public class JobRepository
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration Configuration;
 
         public JobRepository(IConfiguration configuration)
         {
-            _configuration = configuration;
+            Configuration = configuration;
         }
 
         private SqlConnection GetConnection()
         {
-            return new SqlConnection(_configuration.GetConnectionString("JOBAppCon"));
+            return new SqlConnection(Configuration.GetConnectionString("JOBAppCon"));
         }
 
-
-
-
-
-
-
-        public  async Task<IEnumerable<JOB> > JobsGetAll()
+      public  async Task<IEnumerable<JOB> > JobsGetAll()
         {
             var jobs = new List<JOB>();
 

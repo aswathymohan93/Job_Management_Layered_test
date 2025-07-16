@@ -11,11 +11,11 @@ namespace Job_Layer_Management.Controllers
     public class JOBController : ControllerBase
     {
 
-        private readonly IJobService _jobService;
+        private readonly IJobService JobService;
 
         public JOBController(IJobService jobService)
         {
-            _jobService = jobService;
+            JobService = jobService;
         }
 
         /// <summary>
@@ -25,11 +25,12 @@ namespace Job_Layer_Management.Controllers
         /// A response containing the total count of job records and the job data.
         /// </returns>
         [HttpGet]
-        public async Task<IActionResult> GetJobs()
+        public async Task<IActionResult> GetJobs() 
         {
             try
-            { // get all jobs
-                var jobs = await _jobService.JobsGetAll();
+            {
+                // To get all job records
+                var jobs = await JobService.JobsGetAll();
 
                 // return Ok(jobs.Count()+" number of records found");
 
@@ -57,8 +58,9 @@ namespace Job_Layer_Management.Controllers
         public async Task<IActionResult> GetJobById(int id)
         {
             try
-            { // get  job by id
-                var jobs = await _jobService.GetJobById(id);
+            {
+                // Retrieve job record by ID
+                var jobs = await JobService.GetJobById(id);
                 return Ok(jobs);
             }
             catch (Exception ex)
@@ -85,8 +87,9 @@ namespace Job_Layer_Management.Controllers
             //string message = result.Message;
             //int jobId = result.jobId;
 
-          
-            var (errorCode, message, jobId) = await _jobService.JobDelete(id);
+
+            // Delete the job record by ID 
+            var (errorCode, message, jobId) = await JobService.JobDelete(id);
 
             return errorCode switch
             {
@@ -130,7 +133,8 @@ namespace Job_Layer_Management.Controllers
             if (jobDto.StartDate > jobDto.EndDate)
                 return BadRequest("Start date cannot be later than end date.");
 
-            var (errorCode, message) = await _jobService.UpdateJob(id, jobDto);
+            // Update the job record with the given ID
+            var (errorCode, message) = await JobService.UpdateJob(id, jobDto); // try catch 
 
             return errorCode switch
             {
@@ -172,7 +176,8 @@ namespace Job_Layer_Management.Controllers
             if (jobDto.StartDate > jobDto.EndDate)
                 return BadRequest("Start date cannot be later than end date.");
 
-            var (errorCode, message, jobId) = await _jobService.AddJob(jobDto);
+            // Add a new job record using the provided information
+            var (errorCode, message, jobId) = await JobService.AddJob(jobDto);
 
             return errorCode switch
             {

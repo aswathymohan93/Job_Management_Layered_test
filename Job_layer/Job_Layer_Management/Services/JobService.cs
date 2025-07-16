@@ -16,6 +16,8 @@ namespace Job_Layer_Management.Services
 
         public async Task<IEnumerable<JOB>> JobsGetAll()
         {
+
+            //get all job
             return await _repository.JobsGetAll();
         }
         public async Task<IEnumerable<JOB>> GetJobById(int id)
