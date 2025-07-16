@@ -29,7 +29,9 @@ namespace Job_Layer_Management.Repositories
         // To get all job records
        public async Task<IEnumerable<JOB> > JobsGetAll()
        {
-          var jobs = new List<JOB>();
+            Logger.LogInformation("Repository: Getting all jobs started.");
+
+            var jobs = new List<JOB>();
 
             using var con = GetConnection();
 
@@ -45,8 +47,11 @@ namespace Job_Layer_Management.Repositories
                     CommandType = CommandType.StoredProcedure
                 };
 
+              
+
                 using var reader = await cmd.ExecuteReaderAsync();
 
+               
                 while (await reader.ReadAsync())
                 {
                     jobs.Add(new JOB
@@ -60,11 +65,14 @@ namespace Job_Layer_Management.Repositories
 
                     });
                 }
+                Logger.LogInformation($"Repository: Getting all jobs completed. Total jobs: {jobs.Count}");
+
+
             }
             catch (SqlException sqlEx)
 
             {
-                Logger.LogError("SQL Error: " + sqlEx.Message + sqlEx.StackTrace);
+                Logger.LogError("Repository:SQL Error: " + sqlEx.Message + sqlEx.StackTrace);
 
 
                 await con.CloseAsync();
@@ -83,7 +91,9 @@ namespace Job_Layer_Management.Repositories
         // Retrieve job record by ID
         public async Task<IEnumerable<JOB>> GetJobById(int jobId)
         {
-           var jobs = new List<JOB>();
+            Logger.LogInformation($"Repository: Getting job by ID {jobId} started.");
+
+            var jobs = new List<JOB>();
 
 
             using var con = GetConnection();
@@ -100,8 +110,12 @@ namespace Job_Layer_Management.Repositories
 
                 cmd.Parameters.AddWithValue("@JobID", jobId);
 
+               
 
                 using var reader = await cmd.ExecuteReaderAsync();
+
+
+               
 
                 while (await reader.ReadAsync())
                 {
@@ -116,13 +130,15 @@ namespace Job_Layer_Management.Repositories
 
                     });
                 }
+
+                Logger.LogInformation($"Repository: Getting job by ID {jobId} completed.");
             }
             catch (SqlException sqlEx)
 
             {
+                Logger.LogError("Repository: SQL Error: " + sqlEx.Message + sqlEx.StackTrace);
 
-
-               await con.CloseAsync();
+                await con.CloseAsync();
 
                 throw (new Exception("SQL Error: " + sqlEx.Message + sqlEx.StackTrace));
 
@@ -136,6 +152,8 @@ namespace Job_Layer_Management.Repositories
         // Delete the job record by ID 
         public async Task<(int, string, int? JobID)> JobDelete(int jobId)
         {
+            Logger.LogInformation($"Repository: Deleting job with ID {jobId} started.");
+
             using var con = GetConnection();
             
 
@@ -151,7 +169,11 @@ namespace Job_Layer_Management.Repositories
 
                 cmd.Parameters.AddWithValue("@JobID", jobId);
 
+               
+
                 using var reader = await cmd.ExecuteReaderAsync();
+
+               
 
 
                 if (await reader.ReadAsync())
@@ -161,12 +183,16 @@ namespace Job_Layer_Management.Repositories
                     return (errorCode, message, jobId);
                 }
 
+                Logger.LogInformation($"Repository: Deleting job with ID {jobId} completed.");
+
+
                 return (0, "No response from stored procedure", null);
             }
             catch (SqlException sqlEx)
 
             {
 
+                Logger.LogError("Repository: SQL Error: " + sqlEx.Message + sqlEx.StackTrace);
 
                 await con.CloseAsync();
 
@@ -180,6 +206,8 @@ namespace Job_Layer_Management.Repositories
         // Update the job record with the given ID
         public async Task<(int ErrorCode, string Message)> UpdateJob(int jobId, JobUpdateDto jobDto)
         {
+            Logger.LogInformation($"Repository: Updating job with ID {jobId} started.");
+
             using var con = GetConnection();
            
             try
@@ -199,20 +227,28 @@ namespace Job_Layer_Management.Repositories
                 cmd.Parameters.AddWithValue("@EndDate", jobDto.EndDate ?? (object)DBNull.Value);
                 cmd.Parameters.AddWithValue("@IsActive", jobDto.IsActive);
 
+                Logger.LogInformation($"Repository: Updating job with ID {jobId} started.");
+
                 using var reader = await cmd.ExecuteReaderAsync();
 
                 if (await reader.ReadAsync())
                 {
                     int errorCode = Convert.ToInt32(reader["ErrorCode"]);
                     string message = reader["Message"].ToString();
+
+                    Logger.LogInformation($"Repository: Updating job with ID {jobId} completed with message: {message}");
+
                     return (errorCode, message);
                 }
+
+                Logger.LogWarning($"Repository: No result returned from stored procedure while updating job ID {jobId}");
 
                 return (0, "No result returned from stored procedure.");
             }
             catch (SqlException sqlEx)
 
             {
+                Logger.LogError("Repository: SQL Error: " + sqlEx.Message + sqlEx.StackTrace);
 
                 await con.CloseAsync();
 
@@ -224,6 +260,8 @@ namespace Job_Layer_Management.Repositories
         // Add a new job record using the provided information
         public async Task<(int ErrorCode, string Message, int? JobID)> AddJob( JobUpdateDto jobDto)
         {
+            Logger.LogInformation("Repository: Adding new job started.");
+
             using var con = GetConnection();
            
 
@@ -251,14 +289,18 @@ namespace Job_Layer_Management.Repositories
                     int errorCode = Convert.ToInt32(reader["ErrorCode"]);
                     string message = reader["Message"].ToString();
                     int? jobId = reader["JobID"] == DBNull.Value ? null : Convert.ToInt32(reader["JobID"]);
+                    Logger.LogInformation($"Repository: Job added successfully. Job ID: {jobId}");
                     return (errorCode, message, jobId);
                 }
+
+                Logger.LogWarning("Repository: No result returned from stored procedure while adding job.");
 
                 return (0, "No result returned from stored procedure", null);
             }
             catch (SqlException sqlEx)
 
             {
+                Logger.LogError("Repository: SQL Error: " + sqlEx.Message + sqlEx.StackTrace);
 
                 await con.CloseAsync();
 

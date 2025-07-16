@@ -30,14 +30,15 @@ namespace Job_Layer_Management.Controllers
         [HttpGet]
         public async Task<IActionResult> GetJobs() 
         {
-            Logger.LogInformation("Started executing GetJobs");
+            Logger.LogInformation("Getting all jobs started.");
 
             try
             {
                 // To get all job records
                 var jobs = await JobService.JobsGetAll();
 
-                
+
+                Logger.LogInformation($"Getting all jobs completed. Total jobs: {jobs.Count()}");
 
                 return Ok(new
                 {
@@ -68,12 +69,18 @@ namespace Job_Layer_Management.Controllers
         {
             try
             {
+                Logger.LogInformation($"Getting job by ID {id} started.");
                 // Retrieve job record by ID
                 var jobs = await JobService.GetJobById(id);
+
+                Logger.LogInformation($"Getting job by ID {id} completed.");
+
                 return Ok(jobs);
+
             }
             catch (Exception ex)
             {
+                Logger.LogError("Exception" + ex.Message);
                 throw (new Exception("Exception" + ex.Message));
                 
             }
@@ -94,8 +101,11 @@ namespace Job_Layer_Management.Controllers
 
             try
             {
+                Logger.LogInformation($"Deleting job with ID {id} started.");
                 // Delete the job record by ID 
                 var (errorCode, message, jobId) = await JobService.JobDelete(id);
+
+                Logger.LogInformation($"Deleting job with ID {id} completed.");
 
                 return errorCode switch
                 {
@@ -107,6 +117,7 @@ namespace Job_Layer_Management.Controllers
             catch (Exception ex)
             {
 
+                Logger.LogError("Exception" + ex.Message);
                 throw (new Exception("Exception" + ex.Message));
 
 
@@ -151,9 +162,11 @@ namespace Job_Layer_Management.Controllers
             try
             {
 
-
+                Logger.LogInformation($"Updating job with ID {id} started.");
                 // Update the job record with the given ID
                 var (errorCode, message) = await JobService.UpdateJob(id, jobDto); // try catch 
+
+                Logger.LogInformation($"Updating job with ID {id} completed.");
 
                 return errorCode switch
                 {
@@ -166,7 +179,7 @@ namespace Job_Layer_Management.Controllers
             }
             catch (Exception ex)
             {
-
+                Logger.LogError("Exception" + ex.Message);
                 throw (new Exception("Exception" + ex.Message));
 
 
@@ -207,8 +220,11 @@ namespace Job_Layer_Management.Controllers
 
             try
             {
+                Logger.LogInformation("Adding new job started.");
                 // Add a new job record using the provided information
                 var (errorCode, message, jobId) = await JobService.AddJob(jobDto);
+
+                Logger.LogInformation($"Adding new job completed. Job ID: {jobId}");
 
                 return errorCode switch
                 {
@@ -219,7 +235,7 @@ namespace Job_Layer_Management.Controllers
             }
             catch (Exception ex)
             {
-
+                Logger.LogError("Exception" + ex.Message);
                 throw (new Exception("Exception" + ex.Message));
 
 
