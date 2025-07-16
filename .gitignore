@@ -4,8 +4,10 @@
 # Ignore Visual Studio folders and temp files
 
 .vs/
-
-
+# Build and VS folders
+*.exe
+*.dll
+*.cache
 
 # Ignore build output
 bin/

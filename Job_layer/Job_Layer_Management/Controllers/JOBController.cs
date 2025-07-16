@@ -86,17 +86,27 @@ namespace Job_Layer_Management.Controllers
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteJob(int id)
         {
-            
 
-            // Delete the job record by ID 
-            var (errorCode, message, jobId) = await JobService.JobDelete(id);
-
-            return errorCode switch
+            try
             {
-                1 => Ok(new { message, jobId }),
-                -1 or -2 => NotFound(new { message, jobId }),
-                _ => StatusCode(500, new { message = "Unknown error occurred.", jobId })
-            };
+                // Delete the job record by ID 
+                var (errorCode, message, jobId) = await JobService.JobDelete(id);
+
+                return errorCode switch
+                {
+                    1 => Ok(new { message, jobId }),
+                    -1 or -2 => NotFound(new { message, jobId }),
+                    _ => StatusCode(500, new { message = "Unknown error occurred.", jobId })
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw (new Exception("Exception" + ex.Message));
+
+
+            }
+
         }
 
 
@@ -133,17 +143,30 @@ namespace Job_Layer_Management.Controllers
             if (jobDto.StartDate > jobDto.EndDate)
                 return BadRequest("Start date cannot be later than end date.");
 
-            // Update the job record with the given ID
-            var (errorCode, message) = await JobService.UpdateJob(id, jobDto); // try catch 
-
-            return errorCode switch
+            try
             {
-                -1 => Conflict(message),
-                -2 => NotFound(message),
-                -3 => NotFound(message),
-                1 => Ok(message),
-                _ => StatusCode(500, "Unknown error.")
-            };
+
+
+                // Update the job record with the given ID
+                var (errorCode, message) = await JobService.UpdateJob(id, jobDto); // try catch 
+
+                return errorCode switch
+                {
+                    -1 => Conflict(message),
+                    -2 => NotFound(message),
+                    -3 => NotFound(message),
+                    1 => Ok(message),
+                    _ => StatusCode(500, "Unknown error.")
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw (new Exception("Exception" + ex.Message));
+
+
+            }
+
         }
 
 
@@ -177,15 +200,27 @@ namespace Job_Layer_Management.Controllers
             if (jobDto.StartDate > jobDto.EndDate)
                 return BadRequest("Start date cannot be later than end date.");
 
-            // Add a new job record using the provided information
-            var (errorCode, message, jobId) = await JobService.AddJob(jobDto);
-
-            return errorCode switch
+            try
             {
-                -1 => Conflict(new { message }),
-                1 => Ok(new { message, jobId }),
-                _ => StatusCode(500, "Unknown error.")
-            };
+                // Add a new job record using the provided information
+                var (errorCode, message, jobId) = await JobService.AddJob(jobDto);
+
+                return errorCode switch
+                {
+                    -1 => Conflict(new { message }),
+                    1 => Ok(new { message, jobId }),
+                    _ => StatusCode(500, "Unknown error.")
+                };
+            }
+            catch (Exception ex)
+            {
+
+                throw (new Exception("Exception" + ex.Message));
+
+
+            }
+
+
         }
 
 
